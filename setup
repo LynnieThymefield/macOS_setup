@@ -15,10 +15,27 @@ sudo softwareupdate --install-rosetta
 # <<< Install Rosetta <<<
 
 # >>> Install Starter Packages >>>
-brew install neovim htop coreutils cmake ninja openjdk node llvm ghidra qemu ffmpeg oh-my-posh python3 cmake-docs
+brew install neovim htop coreutils cmake ninja openjdk \
+              node llvm ghidra qemu ffmpeg oh-my-posh python3 \ 
+              cmake-docs icarus-verilog desktop-file-utils shared-mime-info \
+              gobject-introspection gtk-mac-integration \
+              meson ninja pkg-config gtk+3 gtk4
 
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 echo 'export PATH="/opt/homebrew/opt/llvm/bin:$PATH"' >> ~/.zshrc
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 # <<< Install Starter Packages <<< 
+
+# >>> Build GTKWAVE >>>
+cd ~
+mkdir temp
+cd temp
+git clone "https://github.com/gtkwave/gtkwave.git"
+cd gtkwave
+meson setup build && cd build && meson install
+mv GTKWAVE.app /Applications/
+cd .. 
+cd .. 
+rm -rf temp
+# <<< Build GTKWAVE <<<
